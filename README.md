@@ -15,7 +15,7 @@ spice level, and keyword.
 
 1. Get a free key at https://aistudio.google.com/apikey
 2. `cp .env.example .env` and paste your key in
-3. `uv sync`
+3. `uv sync --locked`
 4. `uv run uvicorn app:app --reload`
 5. Open http://127.0.0.1:8000
 
