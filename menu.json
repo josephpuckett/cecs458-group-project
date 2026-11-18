@@ -1,0 +1,17 @@
+[
+  {"id": 1, "name": "Classic Cheeseburger", "category": "entree", "price": 11.5, "calories": 780, "vegetarian": false, "vegan": false, "gluten_free": false, "spice_level": 0, "description": "Beef patty, cheddar, pickles, house sauce on a toasted bun."},
+  {"id": 2, "name": "Spicy Chicken Sandwich", "category": "entree", "price": 12.0, "calories": 720, "vegetarian": false, "vegan": false, "gluten_free": false, "spice_level": 3, "description": "Crispy chicken, hot honey, slaw, brioche bun."},
+  {"id": 3, "name": "Black Bean Burger", "category": "entree", "price": 10.5, "calories": 560, "vegetarian": true, "vegan": true, "gluten_free": false, "spice_level": 1, "description": "House black bean patty, avocado, lettuce, tomato."},
+  {"id": 4, "name": "Paneer Tikka Wrap", "category": "entree", "price": 11.0, "calories": 610, "vegetarian": true, "vegan": false, "gluten_free": false, "spice_level": 2, "description": "Grilled paneer, mint chutney, onions in a warm flatbread."},
+  {"id": 5, "name": "Grilled Salmon Bowl", "category": "entree", "price": 15.5, "calories": 640, "vegetarian": false, "vegan": false, "gluten_free": true, "spice_level": 0, "description": "Salmon over rice with cucumber, edamame, sesame dressing."},
+  {"id": 6, "name": "Chicken Tikka Masala", "category": "entree", "price": 14.0, "calories": 690, "vegetarian": false, "vegan": false, "gluten_free": true, "spice_level": 2, "description": "Tender chicken in creamy tomato sauce with basmati rice."},
+  {"id": 7, "name": "Chana Masala", "category": "entree", "price": 11.5, "calories": 520, "vegetarian": true, "vegan": true, "gluten_free": true, "spice_level": 2, "description": "Chickpeas simmered in a spiced tomato gravy with rice."},
+  {"id": 8, "name": "Caesar Salad", "category": "salad", "price": 9.0, "calories": 380, "vegetarian": false, "vegan": false, "gluten_free": false, "spice_level": 0, "description": "Romaine, parmesan, croutons, anchovy dressing."},
+  {"id": 9, "name": "Garden Salad", "category": "salad", "price": 8.0, "calories": 190, "vegetarian": true, "vegan": true, "gluten_free": true, "spice_level": 0, "description": "Mixed greens, cucumber, tomato, carrot, lemon vinaigrette."},
+  {"id": 10, "name": "Garlic Fries", "category": "side", "price": 5.0, "calories": 450, "vegetarian": true, "vegan": true, "gluten_free": true, "spice_level": 0, "description": "Crispy fries tossed in garlic and parsley."},
+  {"id": 11, "name": "Jalapeno Poppers", "category": "side", "price": 6.5, "calories": 410, "vegetarian": true, "vegan": false, "gluten_free": false, "spice_level": 3, "description": "Cream cheese stuffed jalapenos, breaded and fried."},
+  {"id": 12, "name": "Chocolate Brownie", "category": "dessert", "price": 5.5, "calories": 430, "vegetarian": true, "vegan": false, "gluten_free": false, "spice_level": 0, "description": "Warm fudge brownie with a scoop of vanilla."},
+  {"id": 13, "name": "Mango Sorbet", "category": "dessert", "price": 5.0, "calories": 180, "vegetarian": true, "vegan": true, "gluten_free": true, "spice_level": 0, "description": "Dairy free sorbet made with real mango."},
+  {"id": 14, "name": "Iced Mango Lassi", "category": "drink", "price": 4.5, "calories": 220, "vegetarian": true, "vegan": false, "gluten_free": true, "spice_level": 0, "description": "Yogurt, mango, a little cardamom."},
+  {"id": 15, "name": "Fresh Lemonade", "category": "drink", "price": 3.5, "calories": 120, "vegetarian": true, "vegan": true, "gluten_free": true, "spice_level": 0, "description": "Squeezed to order, lightly sweet."}
+]

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menu Assistant</title>
+<style>
+  :root {
+    --ink: #1c2530; --paper: #f2f4f6; --card: #ffffff; --line: #d5dbe1;
+    --teal: #0f6e66; --teal-ink: #ffffff; --muted: #5d6975;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+         font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 640px; margin: 0 auto; height: 100dvh; display: flex; flex-direction: column; padding: 0 16px; }
+  header { padding: 20px 0 12px; }
+  h1 { margin: 0; font: 600 28px/1.2 Georgia, "Iowan Old Style", serif; }
+  header p { margin: 4px 0 0; color: var(--muted); }
+  #log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 8px 0; }
+  .msg { max-width: 85%; padding: 10px 14px; border-radius: 14px; white-space: pre-wrap; }
+  .bot { background: var(--card); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .me { background: var(--teal); color: var(--teal-ink); align-self: flex-end; border-bottom-right-radius: 4px; }
+  .err { background: #fdecea; border: 1px solid #f1b5ae; align-self: flex-start; }
+  #chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0; }
+  #chips button { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font: inherit; cursor: pointer; }
+  #chips button:hover { border-color: var(--teal); }
+  form { display: flex; gap: 8px; padding: 8px 0 20px; }
+  input { flex: 1; padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; font: inherit; background: var(--card); }
+  form button { padding: 0 20px; border: 0; border-radius: 10px; background: var(--teal); color: var(--teal-ink); font: inherit; font-weight: 600; cursor: pointer; }
+  form button:disabled { opacity: .5; cursor: default; }
+  :focus-visible { outline: 3px solid #f2b84b; outline-offset: 2px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Menu Assistant</h1>
+    <p>Ask what is good, what fits your diet, or what fits your budget.</p>
+  </header>
+  <div id="log" aria-live="polite"></div>
+  <div id="chips"></div>
+  <form id="form">
+    <input id="input" placeholder="Try: vegan under $12" autocomplete="off" aria-label="Your message">
+    <button id="send">Send</button>
+  </form>
+</main>
+<script>
+const log = document.getElementById("log"), form = document.getElementById("form"),
+      input = document.getElementById("input"), send = document.getElementById("send"),
+      chips = document.getElementById("chips");
+let sessionId = null;
+
+function add(text, cls) {
+  const d = document.createElement("div");
+  d.className = "msg " + cls; d.textContent = text;
+  log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+}
+
+async function ask(text) {
+  chips.innerHTML = "";
+  add(text, "me");
+  const wait = add("Looking at the menu...", "bot");
+  send.disabled = true;
+  try {
+    const r = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text, session_id: sessionId }) });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.detail || "Request failed");
+    sessionId = data.session_id; wait.textContent = data.reply;
+  } catch (e) {
+    wait.className = "msg err"; wait.textContent = "Something went wrong: " + e.message;
+  }
+  send.disabled = false; input.focus(); log.scrollTop = log.scrollHeight;
+}
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const t = input.value.trim(); if (!t) return;
+  input.value = ""; ask(t);
+});
+
+add("Hi! What are you in the mood for?", "bot");
+["Vegan options", "Something spicy under $13", "Gluten free dessert", "Lowest calorie entree"].forEach(t => {
+  const b = document.createElement("button"); b.type = "button"; b.textContent = t;
+  b.onclick = () => ask(t); chips.appendChild(b);
+});
+</script>
+</body>
+</html>

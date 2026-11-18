@@ -1,0 +1,14 @@
+[project]
+name = "cecs458-group-project"
+version = "0.1.0"
+description = "Menu chatbot: Gemini backend with a menu search tool and a simple web UI"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "google-genai>=1.0",
+    "python-dotenv>=1.0",
+]
+
+[tool.uv]
+package = false
