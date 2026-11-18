@@ -14,7 +14,7 @@ from search import search_menu
 
 load_dotenv()
 
-MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite")
 STATIC = Path(__file__).parent / "static"
 
 SYSTEM_PROMPT = (
