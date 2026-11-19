@@ -6,10 +6,11 @@ spice level, and keyword.
 
 ## Layout
 
-- `menu.json` the menu "database"
+- `menu.json` the seed data loaded into menu.db
 - `search.py` the search function Gemini calls as a tool
 - `app.py` FastAPI server, `/api/chat` endpoint, keeps one Gemini chat per session
 - `static/index.html` the chat UI
+- `init_db.py` creates table if non existent upon server start time and picks up any new menu items 
 
 ## Run it
 
@@ -30,5 +31,4 @@ vegan, gluten_free, spice_level (0 to 3), description.
 
 - Add more menu items and fields (allergens, prep time, ingredients)
 - Show matching items as cards in the UI, not just text
-- Swap menu.json for SQLite
 - Add tests for search_menu

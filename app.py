@@ -10,6 +10,9 @@ from google import genai
 from google.genai import types
 from pydantic import BaseModel
 
+from init_db import init_db
+init_db()
+
 from search import search_menu
 
 load_dotenv()

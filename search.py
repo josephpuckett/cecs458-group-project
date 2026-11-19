@@ -1,13 +1,7 @@
 """Menu search. search_menu is the function we hand to Gemini as a tool."""
-import json
-from pathlib import Path
+import sqlite3
 from typing import Optional
-
-MENU_PATH = Path(__file__).parent / "menu.json"
-
-
-def load_menu() -> list[dict]:
-    return json.loads(MENU_PATH.read_text())
+from init_db import DB_PATH
 
 
 def search_menu(
@@ -36,25 +30,48 @@ def search_menu(
         A list of matching menu items, each with name, category, price, calories,
         dietary flags, spice_level, and description.
     """
+
+    # WHERE clause
+    clauses, params = [], []
+    if category:
+        clauses.append("category = ?")
+        params.append(category.lower())
+    if max_price is not None:
+        clauses.append("price <= ?")
+        params.append(max_price)
+    if vegan:
+        clauses.append("vegan = 1")
+    if max_calories is not None:
+        clauses.append("calories <= ?")
+        params.append(max_calories)
+    if vegetarian:
+        clauses.append("vegetarian = 1")
+    if gluten_free:
+        clauses.append("gluten_free = 1")
+    if max_spice_level is not None:
+        clauses.append("spice_level <= ?")
+        params.append(max_spice_level)
+    if keyword:
+        clauses.append("(name || ' ' || description) LIKE ?")
+        params.append(f"%{keyword}%")
+
+        
+
+    sql = "SELECT * FROM menu_items"
+    if clauses:
+        sql += " WHERE " + " AND ".join(clauses)
+
+    # Run it
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row      # rows act like dicts
+        rows = conn.execute(sql, params).fetchall()
+
+    # Convert back to the same shape menu.json had
     results = []
-    for item in load_menu():
-        if category and item["category"] != category.lower():
-            continue
-        if max_price is not None and item["price"] > max_price:
-            continue
-        if max_calories is not None and item["calories"] > max_calories:
-            continue
-        if vegetarian and not item["vegetarian"]:
-            continue
-        if vegan and not item["vegan"]:
-            continue
-        if gluten_free and not item["gluten_free"]:
-            continue
-        if max_spice_level is not None and item["spice_level"] > max_spice_level:
-            continue
-        if keyword:
-            text = (item["name"] + " " + item["description"]).lower()
-            if keyword.lower() not in text:
-                continue
+    for row in rows:
+        item = dict(row)
+        for flag in ("vegetarian", "vegan", "gluten_free"):
+            item[flag] = bool(item[flag])
         results.append(item)
     return results
+
