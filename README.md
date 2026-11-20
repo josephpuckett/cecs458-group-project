@@ -162,16 +162,3 @@ Every supplied filter is combined with AND logic. `category` is compared case-in
 | `static/index.html` | Browser chat interface and client-side session ID handling.                              |
 | `pyproject.toml`    | Python version and package dependency declarations.                                      |
 | `.env.example`      | Example environment-variable configuration; put the real key in the ignored `.env` file. |
-
-## Limitations and responsible use
-
-- The menu is a small, static sample. Prices, availability, ingredients, hours, substitutions, and allergens are not synchronized with a business.
-- Dietary flags in the sample file are not verified allergen or cross-contamination information. Do not rely on this prototype for allergy-safety decisions.
-- The system prompt asks Gemini to search the menu and recommend only returned items, but prompt instructions cannot guarantee that every generated response is accurate. Validate outputs before any real customer use.
-- Guest messages are sent to the configured Gemini API. Do not enter sensitive personal information; review the provider's current data-handling terms before deploying the prototype.
-- Sessions are stored in server memory and are lost when the process restarts. This prototype has no persistent storage, authentication, rate limiting, or production deployment configuration.
-- Tool-call interpretation, response accuracy, performance, and the planned 30-query evaluation have not been measured by this repository documentation.
-
-## Team implementation
-
-The team's technical contribution is the working web-to-model workflow, the Gemini tool integration, the Python menu-search function, a structured sample dataset, and the browser chat interface. Before presenting results, run the application with a configured key and record actual input-to-output examples. Report benchmark results only after executing and documenting the evaluation.
